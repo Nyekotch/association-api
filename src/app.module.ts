@@ -17,13 +17,23 @@ import { UploadModule } from './upload/upload.module';
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: process.env.DATABASE_HOST || 'localhost',
-      port: Number(process.env.DATABASE_PORT) || 5432,
-      username: process.env.DATABASE_USER || 'postgres',
-      password: process.env.DATABASE_PASSWORD || 'postgres',
-      database: process.env.DATABASE_NAME || 'asso_db',
+
+      // Render utilise DATABASE_URL
+      url: process.env.DATABASE_URL,
+
+      // Local utilise les variables séparées
+      host: process.env.DATABASE_HOST,
+      port: Number(process.env.DATABASE_PORT),
+      username: process.env.DATABASE_USER,
+      password: process.env.DATABASE_PASSWORD,
+      database: process.env.DATABASE_NAME,
+
       autoLoadEntities: true,
-      synchronize: true, // ⚠️ ok en dev
+      synchronize: true,
+
+      ssl: process.env.DATABASE_URL
+        ? { rejectUnauthorized: false }
+        : false,
     }),
     UsersModule,
     EventsModule,
