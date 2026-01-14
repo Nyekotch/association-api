@@ -15,32 +15,15 @@ import { UploadModule } from './upload/upload.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: (config: ConfigService) => {
-        const url = config.get('DATABASE_URL');
-        if (url) {
-          return {
-            type: 'postgres' as any,
-            url,
-            autoLoadEntities: true,
-            synchronize: false,
-          };
-        }
-        return {
-          type: 'postgres',
-          host: config.get('DB_HOST'),
-          port: Number(config.get('DB_PORT')),
-          username: config.get('DB_USER'),
-          password: config.get('DB_PASS'),
-          database: config.get('DB_NAME'),
-          autoLoadEntities: true,
-          synchronize: false,
-        };
-      },
-
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: process.env.DATABASE_HOST || 'localhost',
+      port: Number(process.env.DATABASE_PORT) || 5432,
+      username: process.env.DATABASE_USER || 'postgres',
+      password: process.env.DATABASE_PASSWORD || 'postgres',
+      database: process.env.DATABASE_NAME || 'asso_db',
+      autoLoadEntities: true,
+      synchronize: true, // ⚠️ ok en dev
     }),
     UsersModule,
     EventsModule,
