@@ -26,7 +26,7 @@ async function bootstrap() {
 
   // Configurer CORS
   app.enableCors({
-    origin: true,
+    origin: ['https://association-web-blush.vercel.app', 'http://localhost:5173'],
     credentials: true,
   });
 
