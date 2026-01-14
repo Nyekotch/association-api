@@ -19,16 +19,28 @@ import { UploadModule } from './upload/upload.module';
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: (config: ConfigService) => ({
-        type: 'postgres',
-        host: config.get('DB_HOST'),
-        port: Number(config.get('DB_PORT')),
-        username: config.get('DB_USER'),
-        password: config.get('DB_PASS'),
-        database: config.get('DB_NAME'),
-        autoLoadEntities: true,
-        synchronize: false,
-      }),
+      useFactory: (config: ConfigService) => {
+        const url = config.get('DATABASE_URL');
+        if (url) {
+          return {
+            type: 'postgres' as any,
+            url,
+            autoLoadEntities: true,
+            synchronize: false,
+          };
+        }
+        return {
+          type: 'postgres',
+          host: config.get('DB_HOST'),
+          port: Number(config.get('DB_PORT')),
+          username: config.get('DB_USER'),
+          password: config.get('DB_PASS'),
+          database: config.get('DB_NAME'),
+          autoLoadEntities: true,
+          synchronize: false,
+        };
+      },
+
     }),
     UsersModule,
     EventsModule,
