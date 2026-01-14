@@ -21,7 +21,7 @@
     "migration:generate": "npm run build && npx typeorm migration:generate src/db/migrations/InitSchema -d dist/db/data-source.js",
     "migration:run": "npm run build && npx typeorm migration:run -d dist/db/data-source.js",
     "migration:revert": "npm run build && npx typeorm migration:revert -d dist/db/data-source.js",
-    "postinstall": "npm run build",
+    
     "prestart:prod": "npm run build"
   },
   "dependencies": {
