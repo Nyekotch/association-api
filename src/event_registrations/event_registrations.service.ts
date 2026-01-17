@@ -17,7 +17,13 @@ export class EventRegistrationsService {
     return this.eventRegistrationsRepo.save(registration);
   }
 
-  findAll() {
+  findAll(userid?: string) {
+    if (userid) {
+      return this.eventRegistrationsRepo.find({ 
+        where: { memberid: userid }, 
+        relations: ['event', 'member'] 
+      });
+    }
     return this.eventRegistrationsRepo.find({ relations: ['event', 'member'] });
   }
 

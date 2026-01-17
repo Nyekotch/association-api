@@ -17,7 +17,13 @@ export class EventsService {
     return this.eventsRepo.save(event);
   }
 
-  findAll() {
+  findAll(organizerid?: string) {
+    if (organizerid) {
+      return this.eventsRepo.find({ 
+        where: { organizerid }, 
+        relations: ['organizer'] 
+      });
+    }
     return this.eventsRepo.find({ relations: ['organizer'] });
   }
 

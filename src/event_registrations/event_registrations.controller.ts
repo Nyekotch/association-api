@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { EventRegistrationsService } from './event_registrations.service';
 import { CreateEventRegistrationDto } from './dto/create-event_registration.dto';
 import { UpdateEventRegistrationDto } from './dto/update-event_registration.dto';
@@ -13,8 +13,8 @@ export class EventRegistrationsController {
   }
 
   @Get()
-  findAll() {
-    return this.eventRegistrationsService.findAll();
+  findAll(@Query('userid') userid?: string) {
+    return this.eventRegistrationsService.findAll(userid);
   }
 
   @Get(':id')
