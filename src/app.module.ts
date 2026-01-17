@@ -11,6 +11,9 @@ import { ForumPostsModule } from './forum_posts/forum_posts.module';
 import { BlogModule } from './blog/blog.module';
 import { AuthModule } from './auth/auth.module';
 import { UploadModule } from './upload/upload.module';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 
 @Module({

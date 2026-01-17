@@ -27,6 +27,11 @@ export class ForumTopicsController {
     return this.forumTopicsService.update(id, updateForumTopicDto);
   }
 
+  @Patch(':id/views')
+  incrementViews(@Param('id') id: string) {
+    return this.forumTopicsService.incrementViews(id);
+  }
+
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.forumTopicsService.remove(id);

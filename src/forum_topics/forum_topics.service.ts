@@ -33,6 +33,15 @@ export class ForumTopicsService {
     return this.findOne(id);
   }
 
+  async incrementViews(id: string) {
+    await this.forumTopicsRepo.createQueryBuilder()
+      .update(ForumTopic)
+      .set({ viewcount: () => 'viewcount + 1' })
+      .where('id = :id', { id })
+      .execute();
+    return this.findOne(id);
+  }
+
   async remove(id: string) {
     await this.forumTopicsRepo.delete(id);
   }
