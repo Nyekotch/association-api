@@ -1,5 +1,5 @@
 # Image Node officielle
-FROM node:18-alpine
+FROM node:24-alpine
 
 # Dossier de travail dans le conteneur
 WORKDIR /app
